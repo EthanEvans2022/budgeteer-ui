@@ -1,26 +1,28 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import TransactionTable from './components/TransactionTable';
+import Transaction from './schemas/Transaction';
 
-function App() {
+const generateDummyTransactions = (number: number): Transaction[] => {
+  const transactions: Transaction[] = [];
+  for (let i = 1; i <= number; i++) {
+    const transaction: Transaction = {
+      group: `Group ${i}`,
+      category: `Category ${i}`,
+      description: `Description ${i}`,
+      amount: i * 10,
+      time: new Date()
+    };
+    transactions.push(transaction);
+  }
+  return transactions;
+};
+
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <TransactionTable transactions={generateDummyTransactions(10)} />
     </div>
   );
-}
+};
 
 export default App;
