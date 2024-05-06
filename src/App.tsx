@@ -1,5 +1,5 @@
 import React from 'react';
-import TransactionTable from './components/TransactionTable';
+import TransactionTable from './pages/TransactionTable';
 import Transaction from './schemas/Transaction';
 
 const generateDummyTransactions = (number: number): Transaction[] => {

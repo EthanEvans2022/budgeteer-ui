@@ -1,0 +1,28 @@
+.transaction-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.transaction-table__header {
+    background-color: #f8f8f8;
+}
+
+.transaction-table__header-cell {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.transaction-table__entry {
+    transition: background-color 0.3s ease;
+}
+
+.transaction-table__entry:hover {
+    background-color: #f5f5f5;
+}
+
+.transaction-table__cell {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
