@@ -1,6 +1,8 @@
-import React, {FC} from 'react';
-import Transaction from '../schemas/Transaction'
+import React, { FC } from 'react';
+import Transaction from '../schemas/Transaction';
+import TransactionTableEntry from '../components/TableEntry';
 import '../styles/TransactionTable.css';
+
 
 const TransactionTable: FC<{ transactions: Transaction[] }> = ({ transactions }) => {
     return (
@@ -16,13 +18,7 @@ const TransactionTable: FC<{ transactions: Transaction[] }> = ({ transactions })
             </thead>
             <tbody>
                 {transactions.map((transaction, index) => (
-                    <tr className="transaction-table__entry" key={index}>
-                        <td className="transaction-table__cell">{transaction.group}</td>
-                        <td className="transaction-table__cell">{transaction.category}</td>
-                        <td className="transaction-table__cell">{transaction.description}</td>
-                        <td className="transaction-table__cell">{transaction.amount}</td>
-                        <td className="transaction-table__cell">{transaction.time.toDateString()}</td>
-                    </tr>
+                    <TransactionTableEntry key={index} transaction={transaction} />
                 ))}
             </tbody>
         </table>
