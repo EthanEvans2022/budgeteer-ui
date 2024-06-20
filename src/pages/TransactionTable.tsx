@@ -4,12 +4,38 @@ import TransactionTableEntry from '../components/TableEntry';
 import '../styles/TransactionTable.css';
 
 
-const TransactionTable: FC<{ transactions: Transaction[] }> = ({ transactions }) => {
-    const [showModal, setShowModal] = useState(-1);
+interface TransactionTableProps {
+    transactions: Transaction[];
+    setTransactions: (transactions: Transaction[]) => void;
+}
 
-    const toggleModal = (key: number) => {
-        setShowModal(key);
+const TransactionTable: FC<TransactionTableProps> = ({ transactions, setTransactions }) => {
+    const [showOptions, setShowOptions] = useState(-1);
+
+    const toggleOptions = (key: number) => {
+        setShowOptions(key);
     }
+
+    const deleteEntry = (id: number) => {
+        console.log("deleting entry")
+        const updatedTransactions = transactions.filter(transaction => transaction.id !== id);
+        console.log("Count of updatedTransactions:", updatedTransactions.length);
+        setTransactions(updatedTransactions);
+    };
+
+    const updateEntry = (id: number, updatedTransaction: Transaction) => {
+        const updatedTransactions = transactions.map(transaction => {
+            if (transaction.id === id) {
+                return updatedTransaction;
+            }
+            return transaction;
+        });
+        setTransactions(updatedTransactions);
+    };
+
+    const toggleModal = (id: number) => {
+        console.log("Modal toggled")
+    };
 
     return (
         <table className="transaction-table">
@@ -23,8 +49,16 @@ const TransactionTable: FC<{ transactions: Transaction[] }> = ({ transactions })
                 </tr>
             </thead>
             <tbody>
-                {transactions.map((transaction, index) => (
-                    <TransactionTableEntry key={index} id={index} transaction={transaction} showModal={showModal} toggleModal={toggleModal}/>
+                {transactions.map((transaction) => (
+                    <TransactionTableEntry 
+                        key={transaction.id} 
+                        transaction={transaction} 
+                        showOptions={showOptions} 
+                        toggleOptions={toggleOptions}
+                        deleteEntry={deleteEntry}
+                        updateEntry={updateEntry}
+                        toggleModal={toggleModal}
+                    />
                 ))}
             </tbody>
         </table>

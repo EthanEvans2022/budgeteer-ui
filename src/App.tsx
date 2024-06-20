@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import TransactionTable from './pages/TransactionTable';
 import Transaction from './schemas/Transaction';
 
@@ -6,6 +6,7 @@ const generateDummyTransactions = (number: number): Transaction[] => {
   const transactions: Transaction[] = [];
   for (let i = 1; i <= number; i++) {
     const transaction: Transaction = {
+      id: i,
       group: `Group ${i}`,
       category: `Category ${i}`,
       description: `Description ${i}`,
@@ -18,9 +19,10 @@ const generateDummyTransactions = (number: number): Transaction[] => {
 };
 
 const App = () => {
+  const [transactions, setTransactions] = useState<Transaction[]>(generateDummyTransactions(10));
   return (
     <div>
-      <TransactionTable transactions={generateDummyTransactions(10)} />
+      <TransactionTable transactions={transactions} setTransactions={setTransactions}/>
     </div>
   );
 };
