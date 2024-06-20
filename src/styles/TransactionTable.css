@@ -20,9 +20,36 @@
 .transaction-table__entry:hover {
     background-color: #f5f5f5;
 }
+.transaction-table__entry.active {
+    background-color: #f5f5f5;
+}
+
+.transaction-table__entry__options {
+    background-color: #f5f5f5;
+    animation: 0.3s ease 0s 1 slideInFromTop;
+}
+
+.transaction-table__entry__options__buttons {
+    text-align: center;
+    display: flex;
+    justify-content: center; 
+    gap: 20px;
+}
+
 
 .transaction-table__cell {
     padding: 10px;
     text-align: left;
     border-bottom: 1px solid #ddd;
 }
+
+@keyframes slideInFromTop {
+    0% {
+      transform: translateY(-20px);
+      opacity: 0;
+    }
+    100% {
+      transform: translateY(0);
+      opacity: 100%;
+    }
+  }

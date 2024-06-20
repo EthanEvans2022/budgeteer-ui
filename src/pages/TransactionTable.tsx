@@ -1,10 +1,16 @@
-import React, { FC } from 'react';
+import React, { FC, useState} from 'react';
 import Transaction from '../schemas/Transaction';
 import TransactionTableEntry from '../components/TableEntry';
 import '../styles/TransactionTable.css';
 
 
 const TransactionTable: FC<{ transactions: Transaction[] }> = ({ transactions }) => {
+    const [showModal, setShowModal] = useState(-1);
+
+    const toggleModal = (key: number) => {
+        setShowModal(key);
+    }
+
     return (
         <table className="transaction-table">
             <thead>
@@ -18,7 +24,7 @@ const TransactionTable: FC<{ transactions: Transaction[] }> = ({ transactions })
             </thead>
             <tbody>
                 {transactions.map((transaction, index) => (
-                    <TransactionTableEntry key={index} transaction={transaction} />
+                    <TransactionTableEntry key={index} id={index} transaction={transaction} showModal={showModal} toggleModal={toggleModal}/>
                 ))}
             </tbody>
         </table>
