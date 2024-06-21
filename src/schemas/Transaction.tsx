@@ -1,12 +1,12 @@
 class Transaction {
-    id: number;
+    id: string;
     group: string;
     category: string;
     description: string;
     amount: number;
     time: Date;
 
-    constructor(id: number, group: string, category: string, description: string, amount: number, time: Date) {
+    constructor(id: string, group: string, category: string, description: string, amount: number, time: Date) {
         this.id = id; 
         this.group = group;
         this.category = category;
@@ -16,4 +16,4 @@ class Transaction {
     }
 }
 
-export default Transaction
+export default Transaction;

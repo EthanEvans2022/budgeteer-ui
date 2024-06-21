@@ -4,15 +4,15 @@ import  TableEntryOptions from './TableEntryOptions';
 
 interface TableEntryProps {
     transaction: Transaction;
-    showOptions: number;
-    toggleOptions: (id: number) => void;
-    updateEntry: (id: number, updatedTransaction: Transaction) => void;
-    deleteEntry: (id: number) => void;
-    toggleModal: (id: number) => void;
+    selectedEntry: string;
+    toggleOptions: (id: string) => void;
+    updateEntry: (id: string, updatedTransaction: Transaction) => void;
+    deleteEntry: (id: string) => void;
+    toggleModal: (id: string) => void;
 }
 
 const TransactionTableEntry: FC<TableEntryProps> = (props) => {
-    const entry_classes = props.showOptions == props.transaction.id ? "transaction-table__entry active" : "transaction-table__entry";
+    const entry_classes = props.selectedEntry == props.transaction.id ? "transaction-table__entry active" : "transaction-table__entry";
 
     return (
         <>
@@ -23,7 +23,7 @@ const TransactionTableEntry: FC<TableEntryProps> = (props) => {
                 <td className="transaction-table__cell">{props.transaction.amount}</td>
                 <td className="transaction-table__cell">{props.transaction.time.toDateString()}</td>
             </tr>
-            {props.showOptions == props.transaction.id && (
+            {props.selectedEntry == props.transaction.id && (
                 <TableEntryOptions onEdit={()=>props.toggleModal(props.transaction.id)} onDelete={()=>props.deleteEntry(props.transaction.id)}/>    
             )}
         </>

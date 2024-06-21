@@ -3,6 +3,8 @@ import Transaction from '../schemas/Transaction';
 import TransactionTableEntry from '../components/TableEntry';
 import Modal from '../components/Modal';
 import '../styles/TransactionTable.css';
+import { Button, ButtonModifiers } from '../components/Button';
+import TransactionForm from '../forms/TransactionForm';
 
 
 interface TransactionTableProps {
@@ -11,21 +13,21 @@ interface TransactionTableProps {
 }
 
 const TransactionTable: FC<TransactionTableProps> = ({ transactions, setTransactions }) => {
-    const [showOptions, setShowOptions] = useState(-1);
+    const [selectedEntry, setSelectedEntry] = useState("");
     const [showModal, setShowModal] = useState(false);
 
-    const toggleOptions = (key: number) => {
-        setShowOptions(key);
+    const toggleOptions = (id: string) => {
+        setSelectedEntry(id);
     }
 
-    const deleteEntry = (id: number) => {
+    const deleteEntry = (id: string) => {
         console.log("deleting entry")
         const updatedTransactions = transactions.filter(transaction => transaction.id !== id);
         console.log("Count of updatedTransactions:", updatedTransactions.length);
         setTransactions(updatedTransactions);
     };
 
-    const updateEntry = (id: number, updatedTransaction: Transaction) => {
+    const updateEntry = (id: string, updatedTransaction: Transaction) => {
         const updatedTransactions = transactions.map(transaction => {
             if (transaction.id === id) {
                 return updatedTransaction;
@@ -35,18 +37,27 @@ const TransactionTable: FC<TransactionTableProps> = ({ transactions, setTransact
         setTransactions(updatedTransactions);
     };
 
+    const displayAddModal = () => {
+        setSelectedEntry("");
+        setShowModal(true);
+    }
+
     const toggleModal = () => {
         setShowModal(!showModal);
     };
+
 
     return (
         <>
             {showModal && 
                 <Modal
                     onClose={toggleModal}
-                    content={<div>Modal Content</div>}
+                    content={<TransactionForm prevTransaction={
+                        transactions.find(transaction => transaction.id === selectedEntry)
+                    }/>}
                 /> 
             }   
+            <Button text="Add" onClick={displayAddModal} mod={ButtonModifiers.Primary}/>
             <table className="transaction-table">
                 <thead>
                     <tr className="transaction-table__header">
@@ -62,7 +73,7 @@ const TransactionTable: FC<TransactionTableProps> = ({ transactions, setTransact
                         <TransactionTableEntry 
                             key={transaction.id} 
                             transaction={transaction} 
-                            showOptions={showOptions} 
+                            selectedEntry={selectedEntry} 
                             toggleOptions={toggleOptions}
                             deleteEntry={deleteEntry}
                             updateEntry={updateEntry}

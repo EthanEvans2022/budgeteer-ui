@@ -1,7 +1,7 @@
 import React from 'react';
 import '../styles/Button.css'
 
-enum ButtonModifiers {
+export enum ButtonModifiers {
     Primary = 'primary',
     Secondary = 'secondary',
     Success = 'success',
@@ -11,11 +11,11 @@ enum ButtonModifiers {
 interface ButtonProps {
     onClick: () => void;
     text: string;
-    mods?: (ButtonModifiers | 'None')[];
+    mod?: (ButtonModifiers | 'None');
 }
 
-const Button: React.FC<ButtonProps> = ({ onClick, text, mods }) => {
-    const buttonClass = `button ${mods?.join(' ')}`;
+export const Button: React.FC<ButtonProps> = ({ onClick, text, mod }) => {
+    const buttonClass = `button ${mod}`;
 
     return (
         <button onClick={onClick} className={buttonClass}>
@@ -23,5 +23,3 @@ const Button: React.FC<ButtonProps> = ({ onClick, text, mods }) => {
         </button>
     );
 };
-
-export default Button;

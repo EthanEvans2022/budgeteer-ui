@@ -1,5 +1,5 @@
 import React, { FC, useEffect, useRef } from 'react';
-import Button from './Button';
+import { Button } from './Button';
 
 interface TableEntryOptionsProps {
     onEdit: () => void;
