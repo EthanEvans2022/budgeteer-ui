@@ -9,16 +9,21 @@ export enum ButtonModifiers {
 }
 
 interface ButtonProps {
-    onClick: () => void;
+    onClick: (event: React.FormEvent<HTMLButtonElement>) => void;
     text: string;
     mod?: (ButtonModifiers | 'None');
+    type?: 'button' | 'submit' | 'reset';
 }
 
-export const Button: React.FC<ButtonProps> = ({ onClick, text, mod }) => {
+export const Button: React.FC<ButtonProps> = ({ onClick, text, mod, type }) => {
     const buttonClass = `button ${mod}`;
 
     return (
-        <button onClick={onClick} className={buttonClass}>
+        <button 
+            onClick={onClick} 
+            className={buttonClass}
+            type={type || 'button'}
+        > 
             {text}
         </button>
     );

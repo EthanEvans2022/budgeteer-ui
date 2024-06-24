@@ -3,7 +3,7 @@ import Transaction from "../schemas/Transaction";
 import { Button, ButtonModifiers } from "../components/Button";
 import "../styles/Form.css";
 
-const TransactionForm: FC<{ prevTransaction?: Transaction }> = ({ prevTransaction }) => {
+const TransactionForm: FC<{ prevTransaction?: Transaction, onSubmit:(t: Transaction)=>void }> = ({ prevTransaction, onSubmit}) => {
     const [transaction, setTransaction] = useState<Transaction>(prevTransaction || {
         id: "",
         group: "",
@@ -13,16 +13,32 @@ const TransactionForm: FC<{ prevTransaction?: Transaction }> = ({ prevTransactio
         time: new Date()
     })
 
-    const handleChange = () => {
-
+    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const { name, value } = event.target;
+        setTransaction(transaction => ({
+            ...transaction,
+            [name]: value
+        }));
     };
 
-    const handleSubmit = () => {
-
+    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+        onSubmit(transaction);
     };
 
     return (
         <form onSubmit={handleSubmit}>
+            <label className="input-label">
+                Group:
+                <input
+                    type="text"
+                    name="group"
+                    value={transaction.group}
+                    onChange={handleChange}
+                    className="input-field"
+                />
+            </label>
+            <br />
             <label className="input-label">
                 Amount:
                 <input
@@ -67,7 +83,13 @@ const TransactionForm: FC<{ prevTransaction?: Transaction }> = ({ prevTransactio
                 />
             </label>
             <br />
-            <Button text="Submit" onClick={handleChange} mod={ButtonModifiers.Primary}/>
+            <Button 
+                text="Submit" 
+                onClick={() => {console.log("Submitting element")} }
+                mod={ButtonModifiers.Primary}
+                type="submit"
+            />
+            
         </form>
     );
 };

@@ -6,7 +6,6 @@ interface TableEntryProps {
     transaction: Transaction;
     selectedEntry: string;
     toggleOptions: (id: string) => void;
-    updateEntry: (id: string, updatedTransaction: Transaction) => void;
     deleteEntry: (id: string) => void;
     toggleModal: (id: string) => void;
 }

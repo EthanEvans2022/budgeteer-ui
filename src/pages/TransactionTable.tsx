@@ -5,6 +5,7 @@ import Modal from '../components/Modal';
 import '../styles/TransactionTable.css';
 import { Button, ButtonModifiers } from '../components/Button';
 import TransactionForm from '../forms/TransactionForm';
+import { v4 as uuidv4 } from 'uuid';
 
 
 interface TransactionTableProps {
@@ -46,6 +47,19 @@ const TransactionTable: FC<TransactionTableProps> = ({ transactions, setTransact
         setShowModal(!showModal);
     };
 
+    const formSubmit = (transaction: Transaction) => {
+        console.log(transaction)
+        if (transactions.some(t => t.id === transaction.id)) {
+            console.log("updating entry")
+            updateEntry(selectedEntry, transaction);
+        } else {
+            console.log("adding entry")
+            transaction.id = uuidv4();
+            setTransactions([...transactions, transaction]);
+        }
+        toggleModal();
+    }
+
 
     return (
         <>
@@ -54,7 +68,9 @@ const TransactionTable: FC<TransactionTableProps> = ({ transactions, setTransact
                     onClose={toggleModal}
                     content={<TransactionForm prevTransaction={
                         transactions.find(transaction => transaction.id === selectedEntry)
-                    }/>}
+                    }
+                    onSubmit={formSubmit}
+                    />}
                 /> 
             }   
             <Button text="Add" onClick={displayAddModal} mod={ButtonModifiers.Primary}/>
@@ -76,7 +92,6 @@ const TransactionTable: FC<TransactionTableProps> = ({ transactions, setTransact
                             selectedEntry={selectedEntry} 
                             toggleOptions={toggleOptions}
                             deleteEntry={deleteEntry}
-                            updateEntry={updateEntry}
                             toggleModal={toggleModal}
                         />
                     ))}

@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import TransactionTable from './pages/TransactionTable';
 import Transaction from './schemas/Transaction';
+import { v4 as uuidv4 } from 'uuid';
 
 const generateDummyTransactions = (number: number): Transaction[] => {
   const transactions: Transaction[] = [];
   for (let i = 1; i <= number; i++) {
+
     const transaction: Transaction = {
-      id: i.toString(),
+      id: uuidv4(),
       group: `Group ${i}`,
       category: `Category ${i}`,
       description: `Description ${i}`,
