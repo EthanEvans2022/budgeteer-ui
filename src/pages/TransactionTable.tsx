@@ -18,7 +18,11 @@ const TransactionTable: FC<TransactionTableProps> = ({ transactions, setTransact
     const [showModal, setShowModal] = useState(false);
 
     const toggleOptions = (id: string) => {
-        setSelectedEntry(id);
+        if(selectedEntry === id) {
+            setSelectedEntry("");
+        }else{
+            setSelectedEntry(id);
+        }
     }
 
     const deleteEntry = (id: string) => {
