@@ -1,5 +1,7 @@
 import React, { FC, useState } from "react";
 import Transaction from "../schemas/Transaction";
+import { Button, ButtonModifiers } from "../components/Button";
+import "../styles/Form.css";
 
 const TransactionForm: FC<{ prevTransaction?: Transaction }> = ({ prevTransaction }) => {
     const [transaction, setTransaction] = useState<Transaction>(prevTransaction || {
@@ -11,63 +13,61 @@ const TransactionForm: FC<{ prevTransaction?: Transaction }> = ({ prevTransactio
         time: new Date()
     })
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const { name, value } = e.target;
-        setTransaction((prevTransaction) => ({
-            ...prevTransaction,
-            [name]: value,
-        }));
+    const handleChange = () => {
+
     };
 
-    const handleSubmit = (e: React.FormEvent) => {
-        e.preventDefault();
-        // Handle form submission here
-        console.log(transaction);
+    const handleSubmit = () => {
+
     };
 
     return (
         <form onSubmit={handleSubmit}>
-            <label>
+            <label className="input-label">
                 Amount:
                 <input
                     type="number"
                     name="amount"
                     value={transaction.amount}
                     onChange={handleChange}
+                    className="input-field"
                 />
             </label>
             <br />
-            <label>
+            <label className="input-label">
                 Description:
                 <input
                     type="text"
                     name="description"
                     value={transaction.description}
                     onChange={handleChange}
+                    className="input-field"
                 />
             </label>
             <br />
-            <label>
+            <label className="input-label">
                 Category:
                 <input
                     type="text"
                     name="category"
                     value={transaction.category}
                     onChange={handleChange}
+                    className="input-field"
                 />
             </label>
             <br />
-            <label>
+            <label className="input-label">
                 Date:
                 <input
                     type="date"
                     name="date"
                     value={transaction.time.toISOString().split("T")[0]}
                     onChange={handleChange}
+                    className="input-field"
                 />
             </label>
             <br />
-            <button type="submit">Submit</button>
+            <Button text="Submit" onClick={handleChange} mod={ButtonModifiers.Primary}/>
         </form>
     );
 };
