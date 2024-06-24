@@ -1,9 +1,9 @@
 import React, { FC, useState} from 'react';
 import Transaction from '../schemas/Transaction';
-import TransactionTableEntry from '../components/TableEntry';
-import Modal from '../components/Modal';
+import TransactionTableEntry from './TableEntry';
+import Modal from './Modal';
 import '../styles/TransactionTable.css';
-import { Button, ButtonModifiers } from '../components/Button';
+import { Button, ButtonModifiers } from './Button';
 import TransactionForm from '../forms/TransactionForm';
 import { v4 as uuidv4 } from 'uuid';
 
