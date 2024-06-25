@@ -16,8 +16,8 @@ const TransactionTableEntry: FC<TableEntryProps> = (props) => {
     return (
         <>
             <tr className={entry_classes} onClick={()=>{props.toggleOptions(props.transaction.id)}}>
-                <td className="transaction-table__cell">{props.transaction.group}</td>
-                <td className="transaction-table__cell">{props.transaction.category}</td>
+                <td className="transaction-table__cell">{props.transaction.category.name}</td>
+                <td className="transaction-table__cell">{props.transaction.subCategory.name}</td>
                 <td className="transaction-table__cell">{props.transaction.description}</td>
                 <td className="transaction-table__cell">{props.transaction.amount}</td>
                 <td className="transaction-table__cell">{props.transaction.time.toDateString()}</td>

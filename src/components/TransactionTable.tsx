@@ -81,8 +81,8 @@ const TransactionTable: FC<TransactionTableProps> = ({ transactions, setTransact
             <table className="transaction-table">
                 <thead>
                     <tr className="transaction-table__header">
-                        <th className="transaction-table__header-cell">Group</th>
                         <th className="transaction-table__header-cell">Category</th>
+                        <th className="transaction-table__header-cell">Sub-Category</th>
                         <th className="transaction-table__header-cell">Description</th>
                         <th className="transaction-table__header-cell">Amount</th>
                         <th className="transaction-table__header-cell">Time</th>

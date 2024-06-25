@@ -1,15 +1,17 @@
+import Category from "./Category";
+
 class Transaction {
     id: string;
-    group: string;
-    category: string;
+    category: Category;
+    subCategory: Category;
     description: string;
     amount: number;
     time: Date;
 
-    constructor(id: string, group: string, category: string, description: string, amount: number, time: Date) {
+    constructor(id: string, category: Category, subCategory: Category, description: string, amount: number, time: Date) {
         this.id = id; 
-        this.group = group;
         this.category = category;
+        this.subCategory = subCategory;
         this.description = description;
         this.amount = amount;
         this.time = time;

@@ -2,14 +2,17 @@ import React, { FC, useState } from "react";
 import Transaction from "../schemas/Transaction";
 import { Button, ButtonModifiers } from "../components/Button";
 import "../styles/Form.css";
+import Category from "../schemas/Category";
 
 const TransactionForm: FC<{ prevTransaction?: Transaction, onSubmit:(t: Transaction)=>void }> = ({ prevTransaction, onSubmit}) => {
+    const emptySubCat = new Category("", true, []);
+    const emptyCat = new Category("", false, [emptySubCat]); 
     const [transaction, setTransaction] = useState<Transaction>(prevTransaction || {
         id: "",
-        group: "",
+        category: emptyCat,
+        subCategory: emptySubCat,
         amount: 0,
         description: "",
-        category: "",
         time: new Date()
     })
 
@@ -29,11 +32,11 @@ const TransactionForm: FC<{ prevTransaction?: Transaction, onSubmit:(t: Transact
     return (
         <form onSubmit={handleSubmit}>
             <label className="input-label">
-                Group:
+                Description:
                 <input
                     type="text"
-                    name="group"
-                    value={transaction.group}
+                    name="description"
+                    value={transaction.description}
                     onChange={handleChange}
                     className="input-field"
                 />
@@ -51,22 +54,22 @@ const TransactionForm: FC<{ prevTransaction?: Transaction, onSubmit:(t: Transact
             </label>
             <br />
             <label className="input-label">
-                Description:
+                Category:
                 <input
                     type="text"
-                    name="description"
-                    value={transaction.description}
+                    name="category"
+                    value={transaction.category ? transaction.category.id : ""}
                     onChange={handleChange}
                     className="input-field"
                 />
             </label>
             <br />
             <label className="input-label">
-                Category:
+                Sub-Category:
                 <input
                     type="text"
-                    name="category"
-                    value={transaction.category}
+                    name="sub-category"
+                    value={transaction.subCategory ? transaction.subCategory.name : ""}
                     onChange={handleChange}
                     className="input-field"
                 />
