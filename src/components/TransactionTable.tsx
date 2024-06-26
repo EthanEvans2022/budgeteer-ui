@@ -6,14 +6,16 @@ import '../styles/TransactionTable.css';
 import { Button, ButtonModifiers } from './Button';
 import TransactionForm from '../forms/TransactionForm';
 import { v4 as uuidv4 } from 'uuid';
+import Category from '../schemas/Category';
 
 
 interface TransactionTableProps {
     transactions: Transaction[];
+    categories: Map<String, Category>;
     setTransactions: (transactions: Transaction[]) => void;
 }
 
-const TransactionTable: FC<TransactionTableProps> = ({ transactions, setTransactions }) => {
+const TransactionTable: FC<TransactionTableProps> = ({ transactions, categories, setTransactions }) => {
     const [selectedEntry, setSelectedEntry] = useState("");
     const [showModal, setShowModal] = useState(false);
 
@@ -74,6 +76,7 @@ const TransactionTable: FC<TransactionTableProps> = ({ transactions, setTransact
                         transactions.find(transaction => transaction.id === selectedEntry)
                     }
                     onSubmit={formSubmit}
+                    categories={categories}
                     />}
                 /> 
             }   

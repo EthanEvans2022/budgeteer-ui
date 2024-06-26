@@ -4,24 +4,45 @@ import { Button, ButtonModifiers } from "../components/Button";
 import "../styles/Form.css";
 import Category from "../schemas/Category";
 
-const TransactionForm: FC<{ prevTransaction?: Transaction, onSubmit:(t: Transaction)=>void }> = ({ prevTransaction, onSubmit}) => {
-    const emptySubCat = new Category("", true, []);
-    const emptyCat = new Category("", false, [emptySubCat]); 
+interface TransactionFormProps {
+    prevTransaction?: Transaction; 
+    categories: Map<String, Category>;
+    onSubmit:(t: Transaction)=>void; 
+}
+
+const TransactionForm: FC<TransactionFormProps> = ({ prevTransaction, categories, onSubmit}) => {
     const [transaction, setTransaction] = useState<Transaction>(prevTransaction || {
         id: "",
-        category: emptyCat,
-        subCategory: emptySubCat,
+        category: categories.get("empty") || new Category("", false, []),
+        subCategory: categories.get("empty") || new Category("", false, []),
         amount: 0,
         description: "",
         time: new Date()
     })
 
-    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const { name, value } = event.target;
-        setTransaction(transaction => ({
-            ...transaction,
-            [name]: value
-        }));
+    const handleChange = (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+        var { name, value } = event.target;
+        setTransaction(transaction => {
+            if (name === "category") {
+                const selectedCategory = categories.get(value) || new Category("", false, []);
+                return {
+                    ...transaction,
+                    category: selectedCategory, 
+                    subCategory: selectedCategory?.subCats[0] || new Category("", false, [])
+                };
+            } else if (name === "subCategory") {
+                const selectedSubCategory = transaction.category?.subCats.find(cat => cat.id === value);
+                return {
+                    ...transaction,
+                    subCategory: selectedSubCategory || new Category("", false, [])
+                };
+            } else {
+            return {
+                ...transaction,
+                [name]: value
+            };
+            }
+        });
     };
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -55,24 +76,36 @@ const TransactionForm: FC<{ prevTransaction?: Transaction, onSubmit:(t: Transact
             <br />
             <label className="input-label">
                 Category:
-                <input
-                    type="text"
+                <select
                     name="category"
                     value={transaction.category ? transaction.category.id : ""}
                     onChange={handleChange}
                     className="input-field"
-                />
+                >
+                    {
+                        Array.from(categories.values()).map(category => (
+                            <option key={category.id} value={category.id}>
+                                {category.name}
+                            </option>
+                        ))
+                    }
+                </select>
             </label>
             <br />
             <label className="input-label">
                 Sub-Category:
-                <input
-                    type="text"
-                    name="sub-category"
-                    value={transaction.subCategory ? transaction.subCategory.name : ""}
+                <select
+                    name="subCategory"
+                    value={transaction.subCategory ? transaction.subCategory.id : ""}
                     onChange={handleChange}
                     className="input-field"
-                />
+                >
+                    { categories.get(transaction.category.id) ? transaction.category.subCats.map(category => (
+                        <option key={category.id} value={category.id}>
+                            {category.name}
+                        </option>
+                    )): null }
+                </select>
             </label>
             <br />
             <label className="input-label">
