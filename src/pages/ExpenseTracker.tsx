@@ -3,11 +3,11 @@ import { v4 as uuidv4 } from 'uuid';
 import Transaction from '../schemas/Transaction';
 import Category from '../schemas/Category';
 import TransactionTable from '../components/TransactionTable';
-import { generateDummyTransactions, generateDummyCategories } from '../utils/TransactionUtils';
+import Utils from '../utils/TransactionUtils';
 
 const ExpenseTracker: React.FC = () => {
-    const [transactions, setTransactions] = useState<Transaction[]>(generateDummyTransactions(10));
-    const [categories, setCategories] = useState(generateDummyCategories(10));
+    const [categories, setCategories] = useState(Utils.generateDummyCategories(10));
+    const [transactions, setTransactions] = useState<Transaction[]>(Utils.generateDummyTransactionsFromCategories(categories));
 
     return (
         <div>
